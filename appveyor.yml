@@ -41,7 +41,7 @@ deploy:
     force_update: true
     provider: GitHub
     auth_token:
-      secure: FsKnR43Zii08An/ZRYLWntg4qBSiLEqamIul0nAT4Qs3zdt3PwIAlKZhA/uFo2m6
+      secure: 17sEgxLhEIIRLDk1ooeHaWBT9fCpr6kyvmrSbvFOc9c6ZG/j+rJ3Glxpxz0yE/Iz
     artifact: lux-v$(appveyor_build_version).zip
     draft: false
     prerelease: false

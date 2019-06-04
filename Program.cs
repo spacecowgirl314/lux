@@ -38,22 +38,12 @@ namespace Lux
                 // brightness must be a double. cast or this doesn't work
                 DisplayConfiguration.SetMonitorBrightness(monitors[o.MonitorIndex], (double)o.Brightness/ 100);
             }
-            else
-            {
-                Console.WriteLine("Brightness value must be between 0-100.");
-                return 1;
-            }
 
             if (o.Contrast >= 0 && o.Contrast <= 100 && o.MonitorIndex >= 0 && o.MonitorIndex < monitors.Count())
             {
                 verbose.WriteLine($"Setting contrast to {o.Contrast}.");
                 // contrast must be a double. cast or this doesn't work
                 DisplayConfiguration.SetMonitorContrast(monitors[o.MonitorIndex], (double)o.Contrast / 100);
-            }
-            else
-            {
-                Console.WriteLine("Contrast value must be between 0-100.");
-                return 1;
             }
 
             return 0;
