@@ -350,3 +350,5 @@ MigrationBackup/
 
 # End of https://www.gitignore.io/api/csharp
 
+FodyWeavers.xml
+FodyWeavers.xsd

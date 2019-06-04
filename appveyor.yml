@@ -1,0 +1,50 @@
+image: Visual Studio 2019
+
+init:
+  # Set "build version number" to "short-commit-hash" or when tagged to "tag name" (Travis style)
+  - ps: >-
+      if ($env:APPVEYOR_REPO_TAG -eq "true")
+      {
+        Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))"
+      }
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+
+platform:
+  - Any CPU
+
+configuration:
+  - Release
+
+build:
+  parallel: true
+  project: lux.sln
+  
+before_build:
+  - nuget restore
+  
+artifacts:
+  - path: lux-v%APPVEYOR_BUILD_VERSION%.zip
+    name: build
+    
+after_build:
+  - 7z a lux-v%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\bin\%CONFIGURATION%\lux.exe %APPVEYOR_BUILD_FOLDER%\LICENSE %APPVEYOR_BUILD_FOLDER%\README.md
+
+deploy:
+  - release: "v$(appveyor_build_version)"
+    tag: $(APPVEYOR_REPO_TAG_NAME)
+    force_update: true
+    provider: GitHub
+    auth_token:
+      secure: FsKnR43Zii08An/ZRYLWntg4qBSiLEqamIul0nAT4Qs3zdt3PwIAlKZhA/uFo2m6
+    artifact: lux-v$(appveyor_build_version).zip
+    draft: false
+    prerelease: false
+    on:
+      branch: master
+      appveyor_repo_tag: true
